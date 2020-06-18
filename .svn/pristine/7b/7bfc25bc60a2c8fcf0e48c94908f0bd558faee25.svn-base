@@ -1,0 +1,101 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
+<html>
+	<head>
+		<title>我的订单</title>
+        <!-- 
+		<link rel="stylesheet" type="text/css" href="CSS/styles.css">
+		 -->
+	</head>
+
+	<%@include file="common/head.jsp" %>
+			<tr>
+				<td valign="top" align="center">
+					<p>
+						<img src="images/left_top.jpg" width="215" height="100" />
+						<br>
+						<img src="images/003.gif" width="191" height="8">
+				</td>
+				<td valign="top" width="80%">
+					<img src="images/001.jpg" width="595" height="72" />
+					<br />					
+					<div style="background-image:url(images/004.gif)">
+						&nbsp;
+					</div>
+					
+					<br />
+					<img src="images/icon_order.gif" align="top" />
+					您的订单中有以下内容
+					<br />
+					<hr />
+					<table align="center" width="95%" cellspacing="0" cellpadding="3"
+						style="text-align:center; border:1px #cccccc solid;">
+						<tr style="background-color:#CCCCFF;">
+							<td>订单编号</td>
+							<td>订单时间</td>
+							<td>订单状态</td>
+							<td>总额</td>
+							<td>明细</td>
+							<td>删除</td>
+						</tr>
+						<c:forEach items="${requestScope.orders}" var="orders">
+						<tr style="background-color:#FFFFFF;">						  
+							<td>								
+								${orders.oId}
+							</td>
+							<td>								
+								<fmt:formatDate value="${orders.orderTime }" pattern="yyyy-MM-dd HH:mm:SS"/>
+							</td>
+							<td>
+								${orders.orderState }
+							</td>
+							<td>
+								${orders.orderPrice }
+							</td>
+							<td>
+								<a href="${pageContext.request.contextPath}/toOrdersDetails?oId=${orders.oId}">查看</a>
+							</td>
+							<td>
+							    <c:if test="${orders.orderState=='未处理' }">
+								  <a href="${pageContext.request.contextPath}/deleteOrderdts?oId=${orders.oId}">删除</a>
+								</c:if>
+							</td>
+						</tr>
+						</c:forEach>				
+						<tr style="background-color:#CCCCFF;">
+							<td>
+								合计
+							</td>
+							<td>
+								-
+							</td>
+							<td>
+								-
+							</td>
+							
+							<td>
+								￥：${requestScope.ordersSum}
+							</td>
+							<td>
+								
+							</td>
+							<td>
+								
+							</td>
+						</tr>					
+					</table>
+					<br />
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<br>
+					<hr width=100%>
+					<br>	
+					<br>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

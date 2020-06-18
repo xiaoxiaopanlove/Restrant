@@ -1,0 +1,33 @@
+package com.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.UpdateProvider;
+
+import com.aop.UserSQL;
+import com.entity.User;
+
+/**
+ * Title:UserDao
+ * Description:
+ * @author 流年
+ * @date 2017年10月21日 下午8:35:54
+ * 
+ */
+public interface UserDao {
+
+	@Select("select * from users where LoginName=#{loginName} and LoginPwd=#{loginPwd}")
+	public List<User> checkLogin(User user);
+	
+	@InsertProvider(type=UserSQL.class,method="addUser")
+	public int addUser(User user);
+	
+	@Select("select count(id) from users where LoginName=#{loginName}")
+	public int checkloginName(String loginName);
+
+	@UpdateProvider(type=UserSQL.class,method="modifyUser")
+	public int modifyUser(User user);
+
+}

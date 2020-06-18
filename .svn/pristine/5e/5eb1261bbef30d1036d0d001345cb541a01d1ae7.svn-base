@@ -1,0 +1,25 @@
+package com.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Select;
+
+import com.entity.Admin;
+
+/**
+ * Title:AdminDao
+ * Description:
+ * @author 流年
+ * @date 2017年10月21日 下午2:32:57
+ * 
+ */
+public interface AdminDao {
+	/**
+	 * 管理员登录
+	 * @param admin
+	 * @return
+	 */
+	@Select("select * from admin where LoginName=#{loginName} and LoginPwd=#{loginPwd}")
+	public List<Admin> checkLogin(Admin admin);
+
+}

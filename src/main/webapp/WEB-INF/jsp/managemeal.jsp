@@ -1,0 +1,122 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+	<title>管理餐品</title>
+</head>
+
+<%@include file="common/head.jsp" %>
+<tr>
+	<td valign="top" align="center">
+		<p>
+			<img src="images/left_top.jpg" width="215" height="100" />
+			<br>
+			<img src="images/003.gif" width="191" height="8">
+			<!-- 菜系循环开始 -->
+			<c:forEach var="mealSeries" items="${requestScope.page.mealSeries}">
+			<br>
+			<a href="${pageContext.request.contextPath}/toManageMeal?querySeriesId=${mealSeries.seriesId}">${mealSeries.seriesName }</a>
+			<br>
+			</c:forEach>
+			<!-- 菜系循环结束 -->
+
+	</td>
+	<td valign="top" width="80%">
+		<img src="images/001.jpg" width="595" height="72" />
+		<br />
+		<div align="left">
+			<form method="post" action="${pageContext.request.contextPath }/toManageMeal">
+				<label>输入菜名：</label>
+				<input type="text" name="queryMealName" value="${requestScope.page.queryMealName}"/>
+				<input type="hidden" name="querySeriesId" value="${requestScope.page.querySeriesId}">
+				<input type="submit" value="查询">
+			</form>
+		</div>
+		<br />
+		<div style="background-image: url(images/004.gif)">
+			&nbsp;
+		</div>
+		<br><br>
+		<table width="75%" cellspacing="0" cellpadding="4" align="center"
+			   style="text-align:center; border:1px #cccccc solid;">
+			<tr style="background-color:#CCCCFF;">
+				<td width="10%">
+					菜系
+				</td>
+				<td width="20%">
+					菜名
+				</td>
+				<td>
+					摘要
+				</td>
+				<td width="10%">
+					价格
+				</td>
+				<td width="10%">
+					修改
+				</td>
+				<td width="10%">
+					删除
+				</td>
+			</tr>
+			<c:forEach var="meals" items="${requestScope.page.meals}">
+				<tr>
+					<td>
+							${meals.mealSeries.seriesName}
+					</td>
+					<td>
+							${meals.mealName}
+					</td>
+					<td>
+							${meals.mealSummarize}
+					</td>
+					<td>
+							${meals.mealPrice}
+					</td>
+					<td>
+						<a href="${pageContext.request.contextPath }/toUpdateMeal?mealId=${meals.mealId}">修改</a>
+					</td>
+					<td>
+						<a href="${pageContext.request.contextPath }/deleteMeal?mealId=${meals.mealId}">删除</a>
+					</td>
+				</tr>
+			</c:forEach>
+
+			<!-- 分页超链接开始 -->
+			<table align="right">
+				<tr>
+					<td width="130"></td>
+					<td width="80">
+						<c:if test="${page.pageNum>1}">
+							<a href='${pageContext.request.contextPath}/toManageMeal?pageNum=1&querySeriesId=${requestScope.page.querySeriesId}&queryMealName=${requestScope.page.queryMealName}'>首页</A>&nbsp;&nbsp;
+							<a href='${pageContext.request.contextPath}/toManageMeal?pageNum=${requestScope.page.pageNum-1 }&querySeriesId=${requestScope.page.querySeriesId}&queryMealName=${requestScope.page.queryMealName}'>上一页</a>
+						</c:if>
+					</td>
+					<td width="80">
+						<c:if test="${page.pageNum < page.pageCountNum}">
+							<a href='${pageContext.request.contextPath}/toManageMeal?pageNum=${requestScope.page.pageNum+1 }&querySeriesId=${requestScope.page.querySeriesId}&queryMealName=${requestScope.page.queryMealName}'>下一页</a>&nbsp;&nbsp;
+							<a href='${pageContext.request.contextPath}/toManageMeal?pageNum=${requestScope.pageCountNum }&querySeriesId=${requestScope.page.querySeriesId}&queryMealName=${requestScope.page.queryMealName}'>尾页</a>
+						</c:if>
+					</td>
+					<td>共${requestScope.page.countNum}个记录，共${requestScope.page.pageNum}/${requestScope.page.pageCountNum}页&nbsp;&nbsp;
+
+					</td>
+				</tr>
+			</table>
+
+			<!-- 分页超链接结束-->
+		</table>
+	</td>
+</tr>
+<tr>
+	<td colspan="2" align="center">
+		<br>
+		<hr width=100%>
+		<br>
+	</td>
+</tr>
+</table>
+</body>
+</html>
